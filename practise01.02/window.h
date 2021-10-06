@@ -6,7 +6,8 @@
 class Window
 {
 public:
-	bool Initialize(const std::string& windowTitle = "<No name>", int width = 1280, int height = 720);
+	bool Initialize(const std::string& windowTitle = "<No name>",
+		int width = 1280, int height = 720);
 	void Clear();
 	void Present();
 	void Shutdown();

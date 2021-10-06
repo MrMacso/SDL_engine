@@ -7,8 +7,7 @@
 #include "Sound.h"
 #include "Player.h"
 
-class enemy :
-    public GameObject
+class enemy : public GameObject
 {
 
 public:
@@ -23,14 +22,16 @@ public:
 	~enemy();
 
 	int GetVelocity();
-	Vector2D GetPosition();
 	bool GetEnemyDead();
+	Vector2D GetPosition();
+	const BoxCollider& GetCollider() const;
+
 	void SetVelocity(int velocity);
+	void SetDirection(int x, int y);
+
 	void Behavior();
 	void Respawn(Star& coin);
-	void SetDirection(int x, int y);
-	const BoxCollider& GetCollider() const;
-	void Update( Player& player, Star& coin);
+	void Update(Player& player, Star& coin);
 	void Render(Window& window);
 
 private:
@@ -44,4 +45,3 @@ private:
 	Sound m_roar;
 	Vector2D m_direction;
 };
-
