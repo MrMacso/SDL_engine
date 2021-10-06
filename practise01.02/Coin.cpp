@@ -1,6 +1,6 @@
-#include "Star.h"
+#include "Coin.h"
 
-Star::Star(Window& window)
+Coin::Coin(Window& window)
 {
 		m_image.Load("assets/images/Coin_silver.png", window);
 		m_image.SetSpriteDimension(50, 50);
@@ -10,16 +10,14 @@ Star::Star(Window& window)
 		m_image.SetAnimationVelocity(2);
 		m_position = (50, 50);
 		m_sound.Load("assets/music/Coins.mp3");
-
-
 }
 
-Star::~Star()
+Coin::~Coin()
 {
 	m_image.Unload();
 }
 
-void Star::Update(Player& player)
+void Coin::Update(Player& player)
 {
 	if (m_collider.IsColliding(player.GetCollider()))
 	{
@@ -33,7 +31,7 @@ void Star::Update(Player& player)
 	m_image.Update();
 }
 
-void Star::Render(Window& window)
+void Coin::Render(Window& window)
 {
 	m_image.Render(m_position.x, m_position.y, m_angle, window);
 }

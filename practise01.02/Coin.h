@@ -5,12 +5,12 @@
 #include "BoxCollider.h"
 #include "SDLText.h"
 #include <string>
-class Star :
+class Coin :
     public GameObject
 {
 public:
-	Star(Window& window);
-	~Star();
+	Coin(Window& window);
+	~Coin();
 
 	void Update(Player& player);
 	void Render(Window& window);
@@ -27,8 +27,5 @@ private:
 
 	int state;
 	int m_number;
-
-
-
 };
 

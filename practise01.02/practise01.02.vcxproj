@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoxCollider.cpp" />
-    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -165,13 +165,13 @@
     <ClCompile Include="RestartButton.cpp" />
     <ClCompile Include="SDLText.cpp" />
     <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="Star.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Vector2D.cpp" />
-    <ClCompile Include="window.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoxCollider.h" />
-    <ClInclude Include="enemy.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Input.h" />
@@ -183,9 +183,9 @@
     <ClInclude Include="RestartButton.h" />
     <ClInclude Include="SDLText.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="Star.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="Vector2D.h" />
-    <ClInclude Include="window.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

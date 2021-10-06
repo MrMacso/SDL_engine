@@ -3,23 +3,21 @@
 #include <iostream>
 #include "GameObject.h"
 #include "Sprite.h"
-#include "Star.h"
+#include "Coin.h"
 #include "Sound.h"
 #include "Player.h"
 
-class enemy : public GameObject
+class Enemy : public GameObject
 {
-
 public:
 
 	enum Direction
 	{
-		RIGHT,
-		LEFT
+		Right,
+		Left
 	};
-
-	enemy(Window& window);
-	~enemy();
+	Enemy(Window& window);
+	~Enemy();
 
 	int GetVelocity();
 	bool GetEnemyDead();
@@ -30,15 +28,15 @@ public:
 	void SetDirection(int x, int y);
 
 	void Behavior();
-	void Respawn(Star& coin);
-	void Update(Player& player, Star& coin);
+	void Respawn(Coin& coin);
+	void Update(Player& player, Coin& coin);
 	void Render(Window& window);
 
 private:
 
 	int m_velocity;
-	bool isEnemyDead = false;
-	int spawnTimer;
+	bool m_isEnemyDead;
+	int m_spawnTimer;
 	BoxCollider m_collider;
 	Direction m_facingDirection;
 	Sprite m_image;

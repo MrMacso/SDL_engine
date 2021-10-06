@@ -13,17 +13,17 @@ public:
 
 	enum State
 	{
-		IDLE,
-		RUN,
-		ATTACK,
-		HURT,
-		DIE,
-		TOTAL_STATES
+		Idle,
+		Run,
+		Attack,
+		Hurt,
+		Die,
+		Total_states
 	};
 	enum Direction
 	{ 
-		RIGHT, 
-		LEFT
+		Right, 
+		Left
 	};
 	
 	Player(Window& window);
@@ -52,17 +52,16 @@ public:
 private:
 	
 	int m_velocity;
-	int m_health = 1000;
+	int m_health;
 	int m_coin;
 
-	bool m_isAttacking = false;
+	bool m_isAttacking;
 	BoxCollider m_collider;
 	BoxCollider m_hitCollider;
 	Direction m_facingDirection;
-	Sprite m_image[TOTAL_STATES];
+	Sprite m_image[Total_states];
 	Sound m_swing;
 	State m_state;
 	Vector2D m_direction;
-
 };
 

@@ -1,12 +1,13 @@
-#include "enemy.h"
+#include "Enemy.h"
 
-enemy::enemy(Window& window)
+Enemy::Enemy(Window& window)
 {
 	m_velocity = 1;
 	m_position.x = 500;
 	m_position.y = 300;
 	
-	m_facingDirection = LEFT;
+	m_isEnemyDead = false;
+	m_facingDirection = Left;
 	m_image.Load("assets/images/MonsterWalk.png", window);
 	m_image.SetSpriteDimension(64, 64);
 	m_image.SetImageDimension(8, 1, 256, 32);
@@ -20,29 +21,29 @@ enemy::enemy(Window& window)
 	m_roar.Load("assets/music/roar.wav");
 	m_roar.SetVolume(5);
 }
-enemy::~enemy()
+Enemy::~Enemy()
 {
 	m_image.Unload();
 }
-int enemy::GetVelocity()
+int Enemy::GetVelocity()
 {
 	return m_velocity;
 }
-Vector2D enemy::GetPosition()
+Vector2D Enemy::GetPosition()
 {
 	return m_position;
 }
-bool enemy::GetEnemyDead()
+bool Enemy::GetEnemyDead()
 {
-	return isEnemyDead;
+	return m_isEnemyDead;
 }
-void enemy::SetVelocity(int velocity)
+void Enemy::SetVelocity(int velocity)
 {
 	m_velocity = velocity;
 }
-void enemy::Behavior()
+void Enemy::Behavior()
 {
-	if (isEnemyDead == false)
+	if (m_isEnemyDead == false)
 	{
 		if (m_position.x == 1500) SetDirection(-1,0);
 		if (m_position.x == -100) SetDirection(1, 0);
@@ -50,30 +51,27 @@ void enemy::Behavior()
 		if (m_position.y == -100) SetDirection(0, 1);
 	}
 }
-void enemy::Respawn(Star& coin )
+void Enemy::Respawn(Coin& coin )
 {
-	if (isEnemyDead == true)
+	if (m_isEnemyDead == true)
 	{
 		m_roar.Play(1);
 		coin.SetPosition(m_position);
 		m_position.x = rand() % 1400;
 		m_position.y = rand() % 600;
-		isEnemyDead = false;
+		m_isEnemyDead = false;
 	}
 }
-
-void enemy::SetDirection(int x, int y)
+void Enemy::SetDirection(int x, int y)
 {
 	m_direction.x += x;
 	m_direction.y += y;
 }
-const BoxCollider& enemy::GetCollider() const
+const BoxCollider& Enemy::GetCollider() const
 {
 	return m_collider;
 }
-
-
-void enemy::Update(Player& player, Star& coin)
+void Enemy::Update(Player& player, Coin& coin)
 {
 	if (m_collider.IsColliding(player.GetCollider()) && player.GetIsAttacking() == false)
 	{
@@ -83,7 +81,7 @@ void enemy::Update(Player& player, Star& coin)
 	if (m_collider.IsColliding(player.GetCollider()) && player.GetIsAttacking() == true)
 	{
 		
-		isEnemyDead = true;
+		m_isEnemyDead = true;
 		std::cout << "I'M killing THE monster" << std::endl;
 	}
 	Behavior();
@@ -97,15 +95,13 @@ void enemy::Update(Player& player, Star& coin)
 	m_position = m_position.Add(m_direction);
 	m_image.Update();
 }
-
-
-void enemy::Render(Window& window)
+void Enemy::Render(Window& window)
 {
-	if (m_facingDirection == RIGHT)
+	if (m_facingDirection == Right)
 	{
 		m_image.Render(m_position.x, m_position.y, m_angle, window, Sprite::NO_FLIP);
 	}
-	if (m_facingDirection == LEFT)
+	if (m_facingDirection == Left)
 	{
 		m_image.Render(m_position.x, m_position.y, m_angle, window, Sprite::HORZ_FLIP);
 	}

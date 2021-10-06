@@ -7,9 +7,9 @@ class HealthBar
 public:
 	enum State
 	{
-		BAR,
-		BORDER,
-		TOTAL
+		Bar,
+		Border,
+		Total
 	};
 
 	HealthBar(Window& window);

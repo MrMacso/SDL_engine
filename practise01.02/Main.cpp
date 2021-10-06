@@ -1,4 +1,4 @@
-#include "enemy.h"
+#include "Enemy.h"
 #include "GameObject.h"
 #include <iostream>
 #include "Input.h"
@@ -11,11 +11,11 @@
 #include "SDLText.h"
 #include <SDL_ttf.h>
 #include "Sprite.h"
-#include "star.h"
+#include "Coin.h"
 #include <string>
 #include "Music.h"
 #include "Vector2D.h"
-#include "window.h"
+#include "Window.h"
 
 
 bool isGameRunning = true;
@@ -31,8 +31,8 @@ int main(int argc, char* argv[])
 	Sprite howtoplay;
 	Sprite gameover;
 	Music music;
-	
-	
+
+
 	TTF_Init();
 	//MUSIC////////////
 	Music::Initialize();
@@ -44,27 +44,27 @@ int main(int argc, char* argv[])
 	{
 		return 0;
 	}
-	
+
 	//OBJECTS IN GAME/////////
 	Player player(window);
 	player.SetVelocity(5);
 
-	enemy enemy(window);
+	Enemy enemy(window);
 	enemy.SetSize(57, 92);
 
-	Star coin(window);
+	Coin coin(window);
 	coin.SetSize(40, 40);
 	coin.SetPosition(2000, 2000);
 
 	HealthBar healthbar(window);
-	
+
 	//BUTTONS///////////////
 	PlayButton start(window);
 	start.SetState(0);
 
 	PlayButton howto(window);
 	howto.SetState(1);
-	howto.SetPosition(620,760);
+	howto.SetPosition(620, 760);
 
 	PlayButton back(window);
 	back.SetState(2);
@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 
 			//IF YOU CLICK ON THE BUTTON THE GAME STARTS////////////////
 			if (input.IsMouseClicked() == true && input.GetMousePosition().x <= 920
-				&& input.GetMousePosition().x >= 620 && input.GetMousePosition().y 
+				&& input.GetMousePosition().x >= 620 && input.GetMousePosition().y
 				<= 720 && input.GetMousePosition().y >= 600)
 			{
 				gamestate = 1;
@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
 			coin.Render(window);
 			healthbar.Render(window);
 			score->Render(window);
-		
+
 			//UPDATES/////////////////
 			player.Update(input);
 			enemy.Update(player, coin);
@@ -189,7 +189,7 @@ int main(int argc, char* argv[])
 			//SETS ON SCREEN: GAME OVER, FINAL SCORE, RESTART BUTTON//////
 			gameover.Render(0, 0, 0, window);
 			restart.Render(window);
-			
+
 			score->Render(window);
 			restart.Update(input, window);
 			score->SetScore("Coins collected: " + std::to_string(player.GetCoin()));
@@ -237,105 +237,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-
-
-/////////////////////////////////////BIN//////////////////////////////////////////////////////////////////
-				/*int levelArray[15][30] = { {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {0,0,0,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0}, };
-				int sizeOfLevel = 0;
-
-				for (int i = 0; i < 15; i++)
-				{
-					for (int j = 0; j < 30; j++)
-					{
-						if (levelArray[i][j] == 1)
-						{
-							asteroid.Render(window);
-							asteroid.SetPosition(j * 60,i * 60);
-							player.Update(input, asteroid);
-							sizeOfLevel++;
-						}
-					}
-				}
-				/*for (int i = 0; i < 10; i++)
-				{
-					if (player.hitbox.left < asteroid.hitbox.right &&
-						player.hitbox.right < asteroid.hitbox.left &&
-						player.hitbox.top < asteroid.hitbox.bottom &&
-						player.hitbox.bottom < asteroid.hitbox.top)
-					{
-						collision = true;
-						std::cout << "yep" << std::endl;
-					}
-					else
-					{
-						collision = false;
-						std::cout << "nope" << std::endl;
-					}
-				}
-	////////////////////	WASD CONTROLL///////////////////		
-
-	else
-	{
-		m_direction.x = 0;
-		m_direction.y = 0;
-		SetState(RUNLEFT);
-
-	}
-				
-			//LEFT TOP
-	if (input.IsMouseClicked() == true && m_position.x > input.GetMousePosition().x 
-		&& m_position.y > input.GetMousePosition().y)
-	{
-		if(	m_position.y != input.GetMousePosition().y) m_direction.y = -1;
-		if(m_position.x != input.GetMousePosition().x ) m_direction.x = -1;
-		SetState(RUN);
-		m_facingDirection = LEFT;
-	}
-	//RIGHT TOP
-	else if (input.IsMouseClicked() == true && m_position.x < input.GetMousePosition().x
-		&& m_position.y > input.GetMousePosition().y)
-	{	
-		if (m_position.y != input.GetMousePosition().y) m_direction.y = -1;
-		if (m_position.x != input.GetMousePosition().x) m_direction.x = 1;
-		SetState(RUN);
-		m_facingDirection = RIGHT;
-	}
-	//LEFT BOTTOM
-	else if (input.IsMouseClicked() == true && m_position.x > input.GetMousePosition().x
-		&& m_position.y < input.GetMousePosition().y)
-	{
-		if (m_position.y != input.GetMousePosition().y) m_direction.y = 1;
-		if (m_position.x != input.GetMousePosition().x) m_direction.x = -1;
-		SetState(RUN);
-	}
-	//RIGHT BOTTOM
-	else if (input.IsMouseClicked() == true && m_position.x < input.GetMousePosition().x
-		&& m_position.y < input.GetMousePosition().y)
-	{
-		if (m_position.y != input.GetMousePosition().y) m_direction.y = 1;
-		if (m_position.x != input.GetMousePosition().x) m_direction.x = 1;
-		SetState(RUN);
-	}
-	else if (input.IsMouseClicked() == true && m_position.x == input.GetMousePosition().x
-		&& m_position.y == input.GetMousePosition().y)
-	{
-		m_direction.x = 0;
-		m_direction.y = 0;
-	}		
-				
-				
-				*/

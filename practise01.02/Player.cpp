@@ -7,17 +7,18 @@ Player::Player(Window& window)
 	m_health = 1000;
 	m_position.x = 753;
 	m_position.y = 350;
-	m_image[IDLE].Load("assets/images/FightLightBanditLeft.png", window);
-	m_image[RUN].Load("assets/images/LeftRunLightBandit.png", window);
-	m_image[ATTACK].Load("assets/images/AttackLeftLightBandit.png", window);
-	m_image[HURT].Load("assets/images/FightLightBandit.png", window);
-	m_image[DIE].Load("assets/images/FightLightBandit.png", window);
+	m_isAttacking = false;
+	m_image[Idle].Load("assets/images/FightLightBanditLeft.png", window);
+	m_image[Run].Load("assets/images/LeftRunLightBandit.png", window);
+	m_image[Attack].Load("assets/images/AttackLeftLightBandit.png", window);
+	m_image[Hurt].Load("assets/images/FightLightBandit.png", window);
+	m_image[Die].Load("assets/images/FightLightBandit.png", window);
 
-	for (int i = 0; i < TOTAL_STATES; i++)
+	for (int i = 0; i < Total_states; i++)
 	{
 		m_image[i].SetSpriteDimension(132, 120);
 
-		if (i == IDLE)
+		if (i == Idle)
 		{
 			m_image[i].SetImageDimension(4, 1, 192, 48);
 		}
@@ -28,7 +29,7 @@ Player::Player(Window& window)
 		m_image[i].IsAnimated(true);
 		m_image[i].SetAnimationVelocity(0.5f);
 
-		if ( i == DIE)
+		if ( i == Die)
 		{
 			m_image[i].IsAnimationLooping(true);
 		}
@@ -121,8 +122,8 @@ void Player::Update(Input& input)
 	{
 		m_direction.x = -1;
 		m_direction.y = 0;
-		m_facingDirection = LEFT;
-		SetState(RUN);
+		m_facingDirection = Left;
+		SetState(Run);
 
 	}
 	else if (input.GetKeyDown() == SDLK_d)
@@ -130,21 +131,21 @@ void Player::Update(Input& input)
 
 		m_direction.x = 1;
 		m_direction.y = 0;
-		m_facingDirection = RIGHT;
-		SetState(RUN);
+		m_facingDirection = Right;
+		SetState(Run);
 
 	}
 	else if (input.GetKeyDown() == SDLK_w)
 	{
 		m_direction.x = 0;
 		m_direction.y = -1;
-		SetState(RUN);
+		SetState(Run);
 	}
 	else if (input.GetKeyDown() == SDLK_s)
 	{
 		m_direction.x = 0;
 		m_direction.y = 1;
-		SetState(RUN);
+		SetState(Run);
 	}
 	else if (input.GetKeyDown() == SDLK_e)
 	{
@@ -154,12 +155,12 @@ void Player::Update(Input& input)
 	{
 		m_direction.x = 0;
 		m_direction.y = 0;
-		SetState(IDLE);
+		SetState(Idle);
 		m_isAttacking = false;
 	}
 	if (input.GetKeyDown() == SDLK_q)
 	{
-		SetState(ATTACK);
+		SetState(Attack);
 		m_isAttacking = true;
 		AttackCollider();
 	}
@@ -176,11 +177,11 @@ void Player::Update(Input& input)
 
 void Player::Render(Window& window)
 {
-	if (m_facingDirection == LEFT)
+	if (m_facingDirection == Left)
 	{
 		m_image[m_state].Render(m_position.x, m_position.y, m_angle, window, Sprite::NO_FLIP);
 	}
-	if(m_facingDirection == RIGHT)
+	if(m_facingDirection == Right)
 	{
 		m_image[m_state].Render(m_position.x, m_position.y, m_angle, window, Sprite::HORZ_FLIP);
 	}
